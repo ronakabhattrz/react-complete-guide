@@ -1,6 +1,7 @@
 import './App.css';
+import React, { Component }  from 'react';
+import Radium from 'radium';
 import Person from './Person/Person'
-import { Component } from 'react';
 
 class App extends Component {
   state = {
@@ -9,7 +10,7 @@ class App extends Component {
       { id: 'd4rw4f44', name: "John Davis", age: 35 },
       { id: 'g5g4d3d5', name: "Kevin Cooper", age: 17 },
     ],
-    personShow: true
+    personShow: false
   } 
 
   nameChangeHandler = (event, id) => {
@@ -44,11 +45,16 @@ class App extends Component {
 
   render() {
     const style = {
-      backgroundColor: 'white',
+      backgroundColor: 'green',
+      color: 'white',
       font: 'inherit',
-      border: '1px solid blue',
+      border: '1px solid green',
       padding: '8px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      ':hover':{
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
     }
     
     let persons = null;
@@ -66,13 +72,26 @@ class App extends Component {
           })}
         </div>
       );
+      style.backgroundColor = 'red';
+      style.border = '1px solid red';
+      style[':hover'] = {
+        backgroundColor: 'salmon',
+        color: 'black'
+      }
+    }
 
+    const classes = [];
+    if (this.state.persons.length <= 2) {
+      classes.push('red');
+    }
+    if (this.state.persons.length <= 1) {
+      classes.push('bold');
     }
 
     return (
       <div className="App">
         <h1>Hi, I'm a React App.</h1>
-        <p>THis is Really Working!!!!</p>
+        <p className={classes.join(' ')}>THis is Really Working!!!!</p>
         <button 
           style={style}
           onClick={this.togglePersonsHandler}>
@@ -83,5 +102,4 @@ class App extends Component {
     );
   }
 }
-
-export default App;
+export default Radium(App);
